@@ -2,7 +2,7 @@
 
 import unittest
 
-from src.models.board import Board
+from src.models.board import Board, InvalidCellLocationError
 from constants.constants import CellValue, BOARD_SIZE
 
 
@@ -20,3 +20,37 @@ class TestBoardGetBoard(unittest.TestCase):
         self.assertEqual(len(board), BOARD_SIZE)
         for row in board:
             self.assertEqual(len(row), BOARD_SIZE)
+
+
+class TestBoardGetCell(unittest.TestCase):
+
+    def setUp(self) -> None:
+        test_board_state: list[list[CellValue]] = [
+            ["X", "O", None],
+            ["O", None, "X"],
+            [None, "X", "O"],
+        ]
+        self.board = Board(board_state=test_board_state)
+
+    def test_get_cell_raises_invalid_cell_location_error_if_invalid_cell_location_provided(
+        self,
+    ) -> None:
+
+        with self.assertRaises(InvalidCellLocationError):
+            self.board.get_cell(-1, 0)
+
+        with self.assertRaises(InvalidCellLocationError):
+            self.board.get_cell(0, -1)
+
+        with self.assertRaises(InvalidCellLocationError):
+            self.board.get_cell(BOARD_SIZE + 1, 0)
+
+        with self.assertRaises(InvalidCellLocationError):
+            self.board.get_cell(0, BOARD_SIZE + 1)
+
+    def test_get_cell_returns_correct_value_if_valid_cell_location_provided(
+        self,
+    ) -> None:
+        self.assertEqual(self.board.get_cell(0, 0), "X")
+        self.assertEqual(self.board.get_cell(1, 1), None)
+        self.assertEqual(self.board.get_cell(2, 2), "O")
