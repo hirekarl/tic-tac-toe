@@ -1,6 +1,16 @@
 """Game board."""
 
-from constants.constants import BOARD_SIZE, MoveValue, CellValue
+from constants.constants import (
+    MoveValue,
+    CellValue,
+    BOARD_SIZE,
+    GRID_TOP,
+    GRID_COL_JOINER,
+    GRID_ROW_JOINER,
+    GRID_BOTTOM,
+)
+
+from src.utils.colorize import grey, red, green
 
 
 class InvalidCellError(Exception):
@@ -102,3 +112,41 @@ class Board:
             )
 
         self._board[row][col] = move_value
+
+    def stringify_board(self) -> str:
+        """Turn the board into a string for display."""
+
+        rows: list[str] = []
+        for row in range(BOARD_SIZE):
+            cols: list[str] = []
+
+            for col in range(BOARD_SIZE):
+                value: CellValue = self.get_cell(row, col)
+                display_str: str | None = None
+
+                match value:
+                    case None:
+                        match row:
+                            case 0:
+                                display_str = grey(f" {row + 7 + col} ")
+                            case 1:
+                                display_str = grey(f" {row + 3 + col} ")
+                            case 2:
+                                display_str = grey(f" {row - 1 + col} ")
+                            case _:
+                                raise ValueError(f"Invalid row number: {row!r}.")
+
+                    case "X":
+                        display_str = red(" X ")
+                    case "O":
+                        display_str = green(" O ")
+                    case _:
+                        raise ValueError(f"Invalid value: {value!r}.")
+
+                cols.append(display_str)
+
+            row_display: str = GRID_COL_JOINER.join(cols)
+            rows.append(row_display)
+
+        board_display: str = f"{GRID_TOP}{GRID_ROW_JOINER.join(rows)}{GRID_BOTTOM}"
+        return board_display

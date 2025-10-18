@@ -2,10 +2,16 @@
 
 import unittest
 
-from src.models.board import Board, InvalidCellError, InvalidMoveError
+from copy import deepcopy
+
 from constants.constants import CellValue, BOARD_SIZE
 
+from src.models.board import Board, InvalidCellError, InvalidMoveError
 
+from src.utils.colorize import grey, red, green
+
+
+# NB: Do not change! Test cases depend on this specific constant.
 TEST_BOARD_STATE: list[list[CellValue]] = [
     ["X", "O", None],
     ["O", None, "X"],
@@ -33,7 +39,8 @@ class TestBoardGetCell(unittest.TestCase):
     """Test Board.get_cell implementation."""
 
     def setUp(self) -> None:
-        self.board = Board(starting_state=TEST_BOARD_STATE)
+        test_board_state: list[list[CellValue]] = deepcopy(TEST_BOARD_STATE)
+        self.board = Board(starting_state=test_board_state)
 
     def test_get_cell_raises_invalid_cell_error_if_invalid_cell_provided(
         self,
@@ -68,7 +75,8 @@ class TestBoardMakeMove(unittest.TestCase):
     """Docstring goes here."""
 
     def setUp(self) -> None:
-        self.board = Board(starting_state=TEST_BOARD_STATE)
+        test_board_state: list[list[CellValue]] = deepcopy(TEST_BOARD_STATE)
+        self.board = Board(starting_state=test_board_state)
 
     def test_make_move_raises_invalid_cell_error_if_invalid_cell_attempted(
         self,
@@ -103,3 +111,29 @@ class TestBoardMakeMove(unittest.TestCase):
 
         self.board.make_move(1, 1, "O")
         self.assertEqual(self.board.get_cell(1, 1), "O")
+
+
+class TestBoardStringifyBoard(unittest.TestCase):
+    """Tests that Board.stringify_board returns the correct string."""
+
+    def setUp(self) -> None:
+        test_board_state: list[list[CellValue]] = deepcopy(TEST_BOARD_STATE)
+        self.board = Board(starting_state=test_board_state)
+
+    def test_stringify_board_returns_proper_board_string(self) -> None:
+        """Tests that Board.stringify_board returns the correct string."""
+
+        actual_board_string = self.board.stringify_board()
+
+        top: str = "   ╻   ╻   "
+        row1: str = f"{red(' X ')}┃{green(' O ')}┃{grey(' 9 ')}"
+        joiner: str = "━━━╋━━━╋━━━"
+        row2: str = f"{green(' O ')}┃{grey(' 5 ')}┃{red(' X ')}"
+        row3: str = f"{grey(' 1 ')}┃{red(' X ')}┃{green(' O ')}"
+        bottom: str = "   ╹   ╹   "
+
+        correct_board_string: str = (
+            f"{top}\n{row1}\n{joiner}\n{row2}\n{joiner}\n{row3}\n{bottom}"
+        )
+
+        self.assertEqual(actual_board_string, correct_board_string)
