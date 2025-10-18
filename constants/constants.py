@@ -2,7 +2,7 @@
 
 from typing import Literal
 
-
-CellValue = Literal["X", "O", None]
-
 BOARD_SIZE: int = 3
+
+MoveValue = Literal["X", "O"]
+CellValue = MoveValue | None
