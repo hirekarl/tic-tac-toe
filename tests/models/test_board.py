@@ -7,7 +7,7 @@ from constants.constants import CellValue, BOARD_SIZE
 
 
 class TestBoardGetBoard(unittest.TestCase):
-    """test Board.get_board implementation."""
+    """Test Board.get_board implementation."""
 
     def setUp(self) -> None:
         self.board = Board()
@@ -23,6 +23,7 @@ class TestBoardGetBoard(unittest.TestCase):
 
 
 class TestBoardGetCell(unittest.TestCase):
+    """Test Board.get_cell implementation."""
 
     def setUp(self) -> None:
         test_board_state: list[list[CellValue]] = [
@@ -35,6 +36,8 @@ class TestBoardGetCell(unittest.TestCase):
     def test_get_cell_raises_invalid_cell_location_error_if_invalid_cell_location_provided(
         self,
     ) -> None:
+        """Test that Board.get_cell raises InvalidCellLocationError
+        if invalid cell location provided."""
 
         with self.assertRaises(InvalidCellLocationError):
             self.board.get_cell(-1, 0)
@@ -51,6 +54,9 @@ class TestBoardGetCell(unittest.TestCase):
     def test_get_cell_returns_correct_value_if_valid_cell_location_provided(
         self,
     ) -> None:
+        """Test that Board.get_cell returns correct value
+        if valid cell location provided."""
+
         self.assertEqual(self.board.get_cell(0, 0), "X")
         self.assertEqual(self.board.get_cell(1, 1), None)
         self.assertEqual(self.board.get_cell(2, 2), "O")
