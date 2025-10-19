@@ -1,5 +1,7 @@
 """Game board."""
 
+from copy import deepcopy
+
 from constants.constants import (
     MoveValue,
     CellValue,
@@ -45,7 +47,7 @@ class Board:
 
     _board: list[list[CellValue]]
 
-    def __init__(self, starting_state: list[list[CellValue]] = BLANK_BOARD) -> None:
+    def __init__(self, starting_state: list[list[CellValue]] = deepcopy(BLANK_BOARD)) -> None:
         self._board: list[list[CellValue]] = starting_state
 
     def __str__(self) -> str:
