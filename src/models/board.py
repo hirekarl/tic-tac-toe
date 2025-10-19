@@ -1,7 +1,7 @@
 """Game board."""
 
 from copy import deepcopy
-from typing import List
+from typing import List, Tuple, Union
 
 from constants.constants import (
     MoveValue,
@@ -123,7 +123,16 @@ class Board:
         self._board[row][col] = move_value
 
     def stringify_board(self) -> str:
-        """Turn the board into a string for display."""
+        """Generate a string representation of the board.
+
+        Raises:
+            ValueError: If attempt is made to stringify a board of
+                incorrect dimensions.
+            ValueError: If the value of a cell is not "X", "O", or `None`.
+
+        Returns:
+            str: A stringified, colorized representation of the board.
+        """
 
         rows: List[str] = []
         for row in range(BOARD_SIZE):
@@ -143,7 +152,7 @@ class Board:
                             case 2:
                                 cell_display = grey(f" {row - 1 + col} ")
                             case _:
-                                raise ValueError(f"Invalid row number: {row!r}.")
+                                raise ValueError(f"Invalid row index: {row!r}.")
 
                     case "X":
                         cell_display = red(" X ")
@@ -159,3 +168,42 @@ class Board:
 
         board_display: str = f"{GRID_TOP}{GRID_ROW_JOINER.join(rows)}{GRID_BOTTOM}"
         return board_display
+
+    def check_win(self) -> Tuple[bool, Union[MoveValue, None]]:
+        """
+        Checks the board for a win state.
+
+        Returns:
+            Tuple[bool, Union[MoveValue, None]]: A tuple where the boolean
+            indicates if a win state exists (`True` or `False`), and the second element
+            is the winning value ("X" or "O") if `True`, or `None` if `False`.
+        """
+
+        def _check_line(
+            a: CellValue, b: CellValue, c: CellValue
+        ) -> Union[MoveValue, None]:
+            if a is not None and a == b and b == c:
+                return a
+            return None
+
+        for row in self._board:
+            winner = _check_line(row[0], row[1], row[2])
+            if winner:
+                return (True, winner)
+
+        for col in range(BOARD_SIZE):
+            winner = _check_line(
+                self._board[0][col], self._board[1][col], self._board[2][col]
+            )
+            if winner:
+                return (True, winner)
+
+        winner = _check_line(self._board[0][0], self._board[1][1], self._board[2][2])
+        if winner:
+            return (True, winner)
+
+        winner = _check_line(self._board[0][2], self._board[1][1], self._board[2][0])
+        if winner:
+            return (True, winner)
+
+        return (False, None)

@@ -145,3 +145,86 @@ class TestBoardStringifyBoard(unittest.TestCase):
         )
 
         self.assertEqual(actual_board_string, correct_board_string)
+
+
+class TestBoardCheckWin(unittest.TestCase):
+    """Tests that `Board.check_win` correctly detects a win state."""
+
+    def test_check_win_detects_horizontal_win(self) -> None:
+        """Test that `Board.check_win` correct detects a horizontal win state."""
+
+        horizontal_win_state_1: List[List[CellValue]] = [
+            ["X", "X", "X"],
+            ["O", None, "O"],
+            [None, None, "O"],
+        ]
+
+        horizontal_win_state_1_board: Board = Board(
+            starting_state=horizontal_win_state_1
+        )
+        self.assertEqual(horizontal_win_state_1_board.check_win(), (True, "X"))
+
+        horizontal_win_state_2: List[List[CellValue]] = [
+            [None, "X", "X"],
+            ["X", None, None],
+            ["O", "O", "O"],
+        ]
+
+        horizontal_win_state_2_board: Board = Board(
+            starting_state=horizontal_win_state_2
+        )
+        self.assertEqual(horizontal_win_state_2_board.check_win(), (True, "O"))
+
+    def test_check_win_detects_vertical_win(self) -> None:
+        """Test that `Board.check_win` correctly detects a vertical win state."""
+
+        vertical_win_state_1: List[List[CellValue]] = [
+            ["O", "X", None],
+            ["O", "X", "X"],
+            ["O", "O", None],
+        ]
+
+        vertical_win_state_1_board: Board = Board(starting_state=vertical_win_state_1)
+        self.assertEqual(vertical_win_state_1_board.check_win(), (True, "O"))
+
+        vertical_win_state_2: List[List[CellValue]] = [
+            ["O", None, "X"],
+            [None, "O", "X"],
+            ["O", None, "X"],
+        ]
+
+        vertical_win_state_2_board: Board = Board(starting_state=vertical_win_state_2)
+        self.assertEqual(vertical_win_state_2_board.check_win(), (True, "X"))
+
+    def test_check_win_detects_diagonal_wins(self) -> None:
+        """Test that `Board.check_win` correctly detects a diagonal win state."""
+
+        diagonal_win_state_1: List[List[CellValue]] = [
+            ["O", "X", None],
+            ["X", "O", "X"],
+            [None, None, "O"],
+        ]
+
+        diagonal_win_state_1_board: Board = Board(starting_state=diagonal_win_state_1)
+        self.assertEqual(diagonal_win_state_1_board.check_win(), (True, "O"))
+
+        diagonal_win_state_2: List[List[CellValue]] = [
+            [None, "O", "X"],
+            ["O", "X", "O"],
+            ["X", None, None],
+        ]
+
+        diagonal_win_state_2_board: Board = Board(starting_state=diagonal_win_state_2)
+        self.assertEqual(diagonal_win_state_2_board.check_win(), (True, "X"))
+
+    def test_check_win_detects_non_win(self) -> None:
+        """Test that `Board.check_win` correctly detects a non-win state."""
+
+        non_win_state: List[List[CellValue]] = [
+            ["X", "O", "X"],
+            ["O", "X", "O"],
+            ["O", "X", "O"],
+        ]
+
+        non_win_state_board: Board = Board(starting_state=non_win_state)
+        self.assertEqual(non_win_state_board.check_win(), (False, None))
