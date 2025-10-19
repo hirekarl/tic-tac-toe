@@ -11,7 +11,7 @@ from src.models.board import Board, InvalidCellError, InvalidMoveError
 from src.utils.colorize import grey, red, green
 
 
-# NB: Do not change! Test cases depend on this specific constant.
+# NB: Do not change! Test cases depend on this.
 TEST_BOARD_STATE: list[list[CellValue]] = [
     ["X", "O", None],
     ["O", None, "X"],
@@ -60,11 +60,11 @@ class TestBoardGetCell(unittest.TestCase):
         with self.assertRaises(InvalidCellError):
             self.board.get_cell(0, BOARD_SIZE + 1)
 
-    def test_get_cell_returns_correct_value_if_valid_cell_location_provided(
+    def test_get_cell_returns_correct_value_if_valid_cell_provided(
         self,
     ) -> None:
         """Test that Board.get_cell returns correct value
-        if valid cell location provided."""
+        if valid cell provided."""
 
         self.assertEqual(self.board.get_cell(0, 0), "X")
         self.assertEqual(self.board.get_cell(1, 1), None)
@@ -72,7 +72,7 @@ class TestBoardGetCell(unittest.TestCase):
 
 
 class TestBoardMakeMove(unittest.TestCase):
-    """Docstring goes here."""
+    """Test Board.make_move implementation."""
 
     def setUp(self) -> None:
         test_board_state: list[list[CellValue]] = deepcopy(TEST_BOARD_STATE)
@@ -106,7 +106,7 @@ class TestBoardMakeMove(unittest.TestCase):
         self,
     ) -> None:
         """Tests that Board.make_move raises InvalidMoveError
-        if an attempt is made to play a move other than 'X' or 'O'."""
+        if an attempt is made to play a move other than "X" or "O"."""
 
         with self.assertRaises(InvalidMoveError):
             self.board.make_move(0, 2, "Y")  # type: ignore

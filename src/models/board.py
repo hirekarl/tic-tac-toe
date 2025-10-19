@@ -16,11 +16,11 @@ from src.utils.colorize import grey, red, green
 
 
 class InvalidCellError(Exception):
-    """Custom error for when an invalid cell location is requested."""
+    """Custom error for when an invalid cell is requested."""
 
     _message: str
 
-    def __init__(self, message: str = "Invalid cell location."):
+    def __init__(self, message: str = "Invalid cell."):
         self._message: str = message
         super().__init__(self._message)
 
@@ -47,7 +47,9 @@ class Board:
 
     _board: list[list[CellValue]]
 
-    def __init__(self, starting_state: list[list[CellValue]] = deepcopy(BLANK_BOARD)) -> None:
+    def __init__(
+        self, starting_state: list[list[CellValue]] = deepcopy(BLANK_BOARD)
+    ) -> None:
         self._board: list[list[CellValue]] = starting_state
 
     def __str__(self) -> str:
@@ -73,7 +75,7 @@ class Board:
         return board_copy
 
     def get_cell(self, row: int, col: int) -> CellValue:
-        """Get the value at location (`row`, `col`) from the board.
+        """Get the value at (`row`, `col`) from the board.
 
         Args:
             row (int): Row number (0-indexed).
@@ -83,11 +85,11 @@ class Board:
             InvalidCellError: When an invalid (`row`, `col`) is requested.
 
         Returns:
-            CellValue: The value at location (`row`, `col`).
+            CellValue: The value at (`row`, `col`).
         """
 
         if not self._is_valid_cell(row, col):
-            raise InvalidCellError(f"({row}, {col}) is not a valid cell location.")
+            raise InvalidCellError(f"({row}, {col}) is not a valid cell.")
 
         cell_value: CellValue = self._board[row][col]
         return cell_value
@@ -103,10 +105,11 @@ class Board:
         Raises:
             InvalidCellError: When an attempt is made to play on an invalid cell.
             InvalidMoveError: When an attempt is made to play on a nonblank cell.
+            InvalidMoveError: When an attempt is made to play a move other than "X" or "O".
         """
 
         if not self._is_valid_cell(row, col):
-            raise InvalidCellError(f"({row}, {col}) is not a valid cell location.")
+            raise InvalidCellError(f"({row}, {col}) is not a valid cell.")
 
         if not self._is_blank_cell(row, col):
             raise InvalidMoveError(
@@ -114,9 +117,7 @@ class Board:
             )
 
         if not move_value in VALID_MOVES:
-            raise InvalidMoveError(
-                f"Invalid move: {move_value!r}."
-            )
+            raise InvalidMoveError(f"Invalid move: {move_value!r}.")
 
         self._board[row][col] = move_value
 
@@ -129,28 +130,28 @@ class Board:
 
             for col in range(BOARD_SIZE):
                 value: CellValue = self.get_cell(row, col)
-                display_str: str | None = None
+                cell_display: str = ""
 
                 match value:
                     case None:
                         match row:
                             case 0:
-                                display_str = grey(f" {row + 7 + col} ")
+                                cell_display = grey(f" {row + 7 + col} ")
                             case 1:
-                                display_str = grey(f" {row + 3 + col} ")
+                                cell_display = grey(f" {row + 3 + col} ")
                             case 2:
-                                display_str = grey(f" {row - 1 + col} ")
+                                cell_display = grey(f" {row - 1 + col} ")
                             case _:
                                 raise ValueError(f"Invalid row number: {row!r}.")
 
                     case "X":
-                        display_str = red(" X ")
+                        cell_display = red(" X ")
                     case "O":
-                        display_str = green(" O ")
+                        cell_display = green(" O ")
                     case _:
                         raise ValueError(f"Invalid value: {value!r}.")
 
-                cols.append(display_str)
+                cols.append(cell_display)
 
             row_display: str = GRID_COL_JOINER.join(cols)
             rows.append(row_display)

@@ -13,7 +13,7 @@ class Color(Enum):
     GREEN = auto()
 
 
-def colorize(input_str: str, color: Color) -> str:
+def _colorize(input_str: str, color: Color) -> str:
     """Colorize input text."""
 
     match color:
@@ -32,16 +32,16 @@ def colorize(input_str: str, color: Color) -> str:
 def grey(input_str: str) -> str:
     """Turn text grey."""
 
-    return colorize(input_str, Color.GREY)
+    return _colorize(input_str, Color.GREY)
 
 
 def red(input_str: str) -> str:
     """Turn text red."""
 
-    return colorize(input_str, Color.RED)
+    return _colorize(input_str, Color.RED)
 
 
 def green(input_str: str) -> str:
     """Turn text green."""
 
-    return colorize(input_str, Color.GREEN)
+    return _colorize(input_str, Color.GREEN)
