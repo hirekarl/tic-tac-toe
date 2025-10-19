@@ -3,8 +3,8 @@
 from typing import Literal, Union
 
 # Typing
-MoveValue = Literal["X", "O"]
-CellValue = Union[MoveValue, None]
+PlayerMarker = Literal["X", "O"]
+CellValue = Union[PlayerMarker, None]
 CellKey = Literal["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 # Game Setup

@@ -4,7 +4,7 @@ from copy import deepcopy
 from typing import List, Tuple, Union
 
 from constants.constants import (
-    MoveValue,
+    PlayerMarker,
     CellValue,
     BOARD_SIZE,
     GRID_TOP,
@@ -40,7 +40,7 @@ BLANK_BOARD: List[List[CellValue]] = [
     [None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)
 ]
 
-VALID_MOVES: List[MoveValue] = ["X", "O"]
+VALID_MOVES: List[PlayerMarker] = ["X", "O"]
 
 
 class Board:
@@ -95,7 +95,7 @@ class Board:
         cell_value: CellValue = self._board[row][col]
         return cell_value
 
-    def make_move(self, row: int, col: int, move_value: MoveValue) -> None:
+    def make_move(self, row: int, col: int, move_value: PlayerMarker) -> None:
         """Play `move_value` at (`row`, `col`).
 
         Args:
@@ -169,7 +169,7 @@ class Board:
         board_display: str = f"{GRID_TOP}{GRID_ROW_JOINER.join(rows)}{GRID_BOTTOM}"
         return board_display
 
-    def check_win(self) -> Tuple[bool, Union[MoveValue, None]]:
+    def check_win(self) -> Tuple[bool, Union[PlayerMarker, None]]:
         """
         Checks the board for a win state.
 
@@ -181,7 +181,7 @@ class Board:
 
         def _check_cell_values(
             a: CellValue, b: CellValue, c: CellValue
-        ) -> Union[MoveValue, None]:
+        ) -> Union[PlayerMarker, None]:
             if a is not None and a == b and b == c:
                 return a
             return None
