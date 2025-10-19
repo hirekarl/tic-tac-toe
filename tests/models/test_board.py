@@ -11,23 +11,21 @@ from src.models.board import Board, InvalidCellError, InvalidMoveError
 
 from src.utils.colorize import grey, red, green
 
-
-# NB: Do not change! Test cases depend on this.
 TEST_BOARD_STATE: List[List[CellValue]] = [
     ["X", "O", None],
     ["O", None, "X"],
     [None, "X", "O"],
-]
+]  # NB: Do not change! Test cases depend on this.
 
 
 class TestBoardGetBoard(unittest.TestCase):
-    """Test Board.get_board implementation."""
+    """Test `Board.get_board` implementation."""
 
     def setUp(self) -> None:
         self.board = Board()
 
     def test_get_board_returns_correctly_sized_board(self) -> None:
-        """Test that the Board.get_board returns a board of the correct dimensions."""
+        """Test that the `Board.get_boar`d returns a board of the correct dimensions."""
 
         board: List[List[CellValue]] = self.board.get_board()
 
@@ -37,7 +35,7 @@ class TestBoardGetBoard(unittest.TestCase):
 
 
 class TestBoardGetCell(unittest.TestCase):
-    """Test Board.get_cell implementation."""
+    """Test `Board.get_cell` implementation."""
 
     def setUp(self) -> None:
         test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
@@ -46,7 +44,7 @@ class TestBoardGetCell(unittest.TestCase):
     def test_get_cell_raises_invalid_cell_error_if_invalid_cell_provided(
         self,
     ) -> None:
-        """Test that Board.get_cell raises InvalidCellError
+        """Test that `Board.get_cell` raises InvalidCellError
         if invalid cell provided."""
 
         with self.assertRaises(InvalidCellError):
@@ -64,7 +62,7 @@ class TestBoardGetCell(unittest.TestCase):
     def test_get_cell_returns_correct_value_if_valid_cell_provided(
         self,
     ) -> None:
-        """Test that Board.get_cell returns correct value
+        """Test that `Board.get_cell` returns correct value
         if valid cell provided."""
 
         self.assertEqual(self.board.get_cell(0, 0), "X")
@@ -73,7 +71,7 @@ class TestBoardGetCell(unittest.TestCase):
 
 
 class TestBoardMakeMove(unittest.TestCase):
-    """Test Board.make_move implementation."""
+    """Test `Board.make_move` implementation."""
 
     def setUp(self) -> None:
         test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
@@ -82,7 +80,7 @@ class TestBoardMakeMove(unittest.TestCase):
     def test_make_move_raises_invalid_cell_error_if_invalid_cell_attempted(
         self,
     ) -> None:
-        """Tests that Board.make_move raises InvalidCellError
+        """Tests that `Board.make_move` raises InvalidCellError
         if an attempt is made to play on an invalid cell."""
 
         with self.assertRaises(InvalidCellError):
@@ -94,7 +92,7 @@ class TestBoardMakeMove(unittest.TestCase):
     def test_make_move_raises_invalid_move_error_if_nonblank_cell_attempted(
         self,
     ) -> None:
-        """Tests that Board.make_move raises InvalidMoveError
+        """Tests that `Board.make_move` raises `InvalidMoveError`
         if an attempt is made to play on a nonblank cell."""
 
         with self.assertRaises(InvalidMoveError):
@@ -106,14 +104,14 @@ class TestBoardMakeMove(unittest.TestCase):
     def test_make_move_raises_invalid_move_error_if_invalid_move_attempted(
         self,
     ) -> None:
-        """Tests that Board.make_move raises InvalidMoveError
+        """Tests that `Board.make_move` raises `InvalidMoveError`
         if an attempt is made to play a move other than "X" or "O"."""
 
         with self.assertRaises(InvalidMoveError):
             self.board.make_move(0, 2, "Y")  # type: ignore
 
     def test_make_move_correctly_changes_board_state(self) -> None:
-        """Tests that Board.make_move correctly changes board state
+        """Tests that `Board.make_move` correctly changes board state
         when called."""
 
         self.board.make_move(0, 2, "X")
@@ -124,14 +122,14 @@ class TestBoardMakeMove(unittest.TestCase):
 
 
 class TestBoardStringifyBoard(unittest.TestCase):
-    """Tests that Board.stringify_board returns the correct string."""
+    """Tests that `Board.stringify_board` returns the correct string."""
 
     def setUp(self) -> None:
         test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
         self.board = Board(starting_state=test_board_state)
 
     def test_stringify_board_returns_proper_board_string(self) -> None:
-        """Tests that Board.stringify_board returns the correct string."""
+        """Tests that `Board.stringify_board` returns the correct string."""
 
         actual_board_string = self.board.stringify_board()
 

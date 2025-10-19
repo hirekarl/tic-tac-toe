@@ -7,8 +7,8 @@ MoveValue = Literal["X", "O"]
 CellValue = Union[MoveValue, None]
 CellKey = Literal["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-# NB: Do not change! Board size should *only* ever be 3.
-BOARD_SIZE: int = 3
+# Game Setup
+BOARD_SIZE: int = 3 # NB: Do not change! Board size should *only* ever be 3.
 
 # ANSI Escape Sequences
 ANSI_GREY: str = "\033[90m"
