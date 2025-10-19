@@ -25,7 +25,7 @@ class TestBoardGetBoard(unittest.TestCase):
         self.board = Board()
 
     def test_get_board_returns_correctly_sized_board(self) -> None:
-        """Test that the `Board.get_boar`d returns a board of the correct dimensions."""
+        """Test that the `Board.get_board` returns a board of the correct dimensions."""
 
         board: List[List[CellValue]] = self.board.get_board()
 
