@@ -1,6 +1,7 @@
 """Game board."""
 
 from copy import deepcopy
+from typing import List
 
 from constants.constants import (
     MoveValue,
@@ -35,22 +36,22 @@ class InvalidMoveError(Exception):
         super().__init__(self._message)
 
 
-BLANK_BOARD: list[list[CellValue]] = [
+BLANK_BOARD: List[List[CellValue]] = [
     [None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)
 ]
 
-VALID_MOVES: list[MoveValue] = ["X", "O"]
+VALID_MOVES: List[MoveValue] = ["X", "O"]
 
 
 class Board:
     """Game board."""
 
-    _board: list[list[CellValue]]
+    _board: List[List[CellValue]]
 
     def __init__(
-        self, starting_state: list[list[CellValue]] = deepcopy(BLANK_BOARD)
+        self, starting_state: List[List[CellValue]] = deepcopy(BLANK_BOARD)
     ) -> None:
-        self._board: list[list[CellValue]] = starting_state
+        self._board: List[List[CellValue]] = starting_state
 
     def __str__(self) -> str:
         return "Board"
@@ -64,14 +65,14 @@ class Board:
     def _is_blank_cell(self, row: int, col: int) -> bool:
         return self._board[row][col] is None
 
-    def get_board(self) -> list[list[CellValue]]:
+    def get_board(self) -> List[List[CellValue]]:
         """Get a copy of the game board state.
 
         Returns:
-            list[list[CellValue]]: A copy of the game board state.
+            List[List[CellValue]]: A copy of the game board state.
         """
 
-        board_copy: list[list[CellValue]] = [row[:] for row in self._board]
+        board_copy: List[List[CellValue]] = [row[:] for row in self._board]
         return board_copy
 
     def get_cell(self, row: int, col: int) -> CellValue:
@@ -124,9 +125,9 @@ class Board:
     def stringify_board(self) -> str:
         """Turn the board into a string for display."""
 
-        rows: list[str] = []
+        rows: List[str] = []
         for row in range(BOARD_SIZE):
-            cols: list[str] = []
+            cols: List[str] = []
 
             for col in range(BOARD_SIZE):
                 value: CellValue = self.get_cell(row, col)

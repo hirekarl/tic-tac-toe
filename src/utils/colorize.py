@@ -6,7 +6,7 @@ from constants.constants import ANSI_GREY, ANSI_RED, ANSI_GREEN, ANSI_RESET
 
 
 class Color(Enum):
-    """Color option enum for colorize()."""
+    """Color option enum for `_colorize`."""
 
     GREY = auto()
     RED = auto()

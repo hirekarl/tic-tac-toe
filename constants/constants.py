@@ -1,10 +1,10 @@
 """Game constants."""
 
-from typing import Literal
+from typing import Literal, Union
 
 # Typing
 MoveValue = Literal["X", "O"]
-CellValue = MoveValue | None
+CellValue = Union[MoveValue, None]
 CellKey = Literal["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
 # NB: Do not change! Board size should *only* ever be 3.

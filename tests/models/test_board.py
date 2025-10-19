@@ -3,6 +3,7 @@
 import unittest
 
 from copy import deepcopy
+from typing import List
 
 from constants.constants import CellValue, BOARD_SIZE
 
@@ -12,7 +13,7 @@ from src.utils.colorize import grey, red, green
 
 
 # NB: Do not change! Test cases depend on this.
-TEST_BOARD_STATE: list[list[CellValue]] = [
+TEST_BOARD_STATE: List[List[CellValue]] = [
     ["X", "O", None],
     ["O", None, "X"],
     [None, "X", "O"],
@@ -28,7 +29,7 @@ class TestBoardGetBoard(unittest.TestCase):
     def test_get_board_returns_correctly_sized_board(self) -> None:
         """Test that the Board.get_board returns a board of the correct dimensions."""
 
-        board: list[list[CellValue]] = self.board.get_board()
+        board: List[List[CellValue]] = self.board.get_board()
 
         self.assertEqual(len(board), BOARD_SIZE)
         for row in board:
@@ -39,7 +40,7 @@ class TestBoardGetCell(unittest.TestCase):
     """Test Board.get_cell implementation."""
 
     def setUp(self) -> None:
-        test_board_state: list[list[CellValue]] = deepcopy(TEST_BOARD_STATE)
+        test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
         self.board = Board(starting_state=test_board_state)
 
     def test_get_cell_raises_invalid_cell_error_if_invalid_cell_provided(
@@ -75,7 +76,7 @@ class TestBoardMakeMove(unittest.TestCase):
     """Test Board.make_move implementation."""
 
     def setUp(self) -> None:
-        test_board_state: list[list[CellValue]] = deepcopy(TEST_BOARD_STATE)
+        test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
         self.board = Board(starting_state=test_board_state)
 
     def test_make_move_raises_invalid_cell_error_if_invalid_cell_attempted(
@@ -126,7 +127,7 @@ class TestBoardStringifyBoard(unittest.TestCase):
     """Tests that Board.stringify_board returns the correct string."""
 
     def setUp(self) -> None:
-        test_board_state: list[list[CellValue]] = deepcopy(TEST_BOARD_STATE)
+        test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
         self.board = Board(starting_state=test_board_state)
 
     def test_stringify_board_returns_proper_board_string(self) -> None:
