@@ -113,6 +113,11 @@ class Board:
                 f"{self._board[row][col]!r} already played at ({row}, {col})."
             )
 
+        if not move_value in VALID_MOVES:
+            raise InvalidMoveError(
+                f"Invalid move: {move_value!r}."
+            )
+
         self._board[row][col] = move_value
 
     def stringify_board(self) -> str:

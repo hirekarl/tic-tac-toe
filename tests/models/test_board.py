@@ -102,6 +102,15 @@ class TestBoardMakeMove(unittest.TestCase):
         with self.assertRaises(InvalidMoveError):
             self.board.make_move(2, 2, "X")
 
+    def test_make_move_raises_invalid_move_error_if_invalid_move_attempted(
+        self,
+    ) -> None:
+        """Tests that Board.make_move raises InvalidMoveError
+        if an attempt is made to play a move other than 'X' or 'O'."""
+
+        with self.assertRaises(InvalidMoveError):
+            self.board.make_move(0, 2, "Y")  # type: ignore
+
     def test_make_move_correctly_changes_board_state(self) -> None:
         """Tests that Board.make_move correctly changes board state
         when called."""
