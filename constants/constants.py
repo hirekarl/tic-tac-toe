@@ -6,7 +6,7 @@ MoveValue = Literal["X", "O"]
 CellValue = MoveValue | None
 CellKey = Literal["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 
-# NB: Do not change! Board size should * ever be 3.
+# NB: Do not change! Board size should *only* ever be 3.
 BOARD_SIZE: int = 3
 
 ANSI_GREY: str = "\033[90m"
