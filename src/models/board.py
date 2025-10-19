@@ -179,7 +179,7 @@ class Board:
             is the winning value ("X" or "O") if `True`, or `None` if `False`.
         """
 
-        def _check_line(
+        def _check_cell_values(
             a: CellValue, b: CellValue, c: CellValue
         ) -> Union[MoveValue, None]:
             if a is not None and a == b and b == c:
@@ -187,22 +187,22 @@ class Board:
             return None
 
         for row in self._board:
-            winner = _check_line(row[0], row[1], row[2])
+            winner = _check_cell_values(row[0], row[1], row[2])
             if winner:
                 return (True, winner)
 
         for col in range(BOARD_SIZE):
-            winner = _check_line(
+            winner = _check_cell_values(
                 self._board[0][col], self._board[1][col], self._board[2][col]
             )
             if winner:
                 return (True, winner)
 
-        winner = _check_line(self._board[0][0], self._board[1][1], self._board[2][2])
+        winner = _check_cell_values(self._board[0][0], self._board[1][1], self._board[2][2])
         if winner:
             return (True, winner)
 
-        winner = _check_line(self._board[0][2], self._board[1][1], self._board[2][0])
+        winner = _check_cell_values(self._board[0][2], self._board[1][1], self._board[2][0])
         if winner:
             return (True, winner)
 
