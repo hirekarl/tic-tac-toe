@@ -1,0 +1,65 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "tic-tac-toe"
+version = "0.1.0"
+description = "A CLI Tic-Tac-Toe game."
+readme = "README.md"
+requires-python = ">=3.13"
+license = { text = "MIT" }
+authors = [{ name = "Karl Johnson", email = "hirekarl@proton.me" }]
+keywords = ["game", "cli", "tic-tac-toe"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Intended Audience :: Developers",
+]
+dependencies = []
+
+[project.scripts]
+tic-tac-toe = "src.main:main"
+
+[project.urls]
+Homepage = "https://github.com/hirekarl/tic_tac_toe"
+Documentation = "https://github.com/hirekarl/tic_tac_toe"
+Repository = "https://github.com/hirekarl/tic_tac_toe"
+"Bug Tracker" = "https://github.com/hirekarl/tic_tac_toe/issues"
+
+[tool.mypy]
+exclude = '^tests/.* | ^test_.*\.py'
+python_version = "3.13"
+strict = true
+ignore_missing_imports = true
+show_error_codes = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = "tests.*"
+disable_error_code = ["annotation-unchecked"]
+
+[tool.black]
+line-length = 88
+target-version = ["py313"]
+include = '\.pyi?$'
+
+[tool.ruff]
+target-version = "py313"
+line-length = 88
+src = ["src"]
+
+[tool.ruff.lint]
+select = [
+    "E",
+    "F",
+    "B",
+    "I",
+    "C4",
+    "N",
+    "W",
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["tic-tac-toe"]
