@@ -14,7 +14,7 @@ from src.utils.colorize import magenta, yellow
 
 
 def _end_game(board: Board, winner: Union[PlayerMarker, None]) -> None:
-    """End game if result is a draw."""
+    """End game if result is a draw or win."""
 
     print(f"\n{board.stringify_board()}")
 
