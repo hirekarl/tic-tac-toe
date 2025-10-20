@@ -1,11 +1,13 @@
 """Game board."""
 
 from copy import deepcopy
-from typing import List, Tuple, Union
+from typing import Set, List, Tuple, Union, cast
 
 from constants.constants import (
     PlayerMarker,
     CellValue,
+    RowsCols,
+    Cell,
     BOARD_SIZE,
     GRID_TOP,
     GRID_COL_JOINER,
@@ -40,7 +42,7 @@ BLANK_BOARD: List[List[CellValue]] = [
     [None for _ in range(BOARD_SIZE)] for _ in range(BOARD_SIZE)
 ]
 
-VALID_MOVES: List[PlayerMarker] = ["X", "O"]
+VALID_MOVES: Set[PlayerMarker] = {"X", "O"}
 
 
 class Board:
@@ -59,10 +61,14 @@ class Board:
     def __repr__(self) -> str:
         return "Board()"
 
-    def _is_valid_cell(self, row: int, col: int) -> bool:
+    def _is_valid_cell(self, cell: Cell) -> bool:
+        row, col = cell
+
         return 0 <= row <= BOARD_SIZE and 0 <= col <= BOARD_SIZE
 
-    def _is_blank_cell(self, row: int, col: int) -> bool:
+    def _is_blank_cell(self, cell: Cell) -> bool:
+        row, col = cell
+
         return self._board[row][col] is None
 
     def get_board(self) -> List[List[CellValue]]:
@@ -75,12 +81,12 @@ class Board:
         board_copy: List[List[CellValue]] = [row[:] for row in self._board]
         return board_copy
 
-    def get_cell(self, row: int, col: int) -> CellValue:
+    def get_cell(self, cell: Cell) -> CellValue:
         """Get the value at (`row`, `col`) from the board.
 
         Args:
-            row (int): Row number (0-indexed).
-            col (int): Column number (0-indexed).
+            # row (RowsCols): Row number (0-indexed).
+            # col (RowsCols): Column number (0-indexed).
 
         Raises:
             InvalidCellError: When an invalid (`row`, `col`) is requested.
@@ -89,18 +95,20 @@ class Board:
             CellValue: The value at (`row`, `col`).
         """
 
-        if not self._is_valid_cell(row, col):
+        row, col = cell
+
+        if not self._is_valid_cell(cell):
             raise InvalidCellError(f"({row}, {col}) is not a valid cell.")
 
         cell_value: CellValue = self._board[row][col]
         return cell_value
 
-    def make_move(self, row: int, col: int, move_value: PlayerMarker) -> None:
+    def make_move(self, cell: Cell, move_value: PlayerMarker) -> None:
         """Play `move_value` at (`row`, `col`).
 
         Args:
-            row (int): Row number (0-indexed).
-            col (int): Column number (0-indexed).
+            # row (int): Row number (0-indexed).
+            # col (int): Column number (0-indexed).
             move_value (MoveValue): "X" or "O".
 
         Raises:
@@ -109,10 +117,12 @@ class Board:
             InvalidMoveError: When an attempt is made to play a move other than "X" or "O".
         """
 
-        if not self._is_valid_cell(row, col):
+        row, col = cell
+
+        if not self._is_valid_cell(cell):
             raise InvalidCellError(f"({row}, {col}) is not a valid cell.")
 
-        if not self._is_blank_cell(row, col):
+        if not self._is_blank_cell(cell):
             raise InvalidMoveError(
                 f"{self._board[row][col]!r} already played at ({row}, {col})."
             )
@@ -138,8 +148,11 @@ class Board:
         for row in range(BOARD_SIZE):
             cols: List[str] = []
 
+            row = cast(RowsCols, row)
             for col in range(BOARD_SIZE):
-                value: CellValue = self.get_cell(row, col)
+                col = cast(RowsCols, col)
+
+                value: CellValue = self.get_cell((row, col))
                 cell_display: str = ""
 
                 match value:
@@ -198,11 +211,15 @@ class Board:
             if winner:
                 return (True, winner)
 
-        winner = _check_cell_values(self._board[0][0], self._board[1][1], self._board[2][2])
+        winner = _check_cell_values(
+            self._board[0][0], self._board[1][1], self._board[2][2]
+        )
         if winner:
             return (True, winner)
 
-        winner = _check_cell_values(self._board[0][2], self._board[1][1], self._board[2][0])
+        winner = _check_cell_values(
+            self._board[0][2], self._board[1][1], self._board[2][0]
+        )
         if winner:
             return (True, winner)
 

@@ -19,14 +19,11 @@ TEST_BOARD_STATE: List[List[CellValue]] = [
 
 
 class TestBoardGetBoard(unittest.TestCase):
-    """Test `Board.get_board` implementation."""
 
     def setUp(self) -> None:
         self.board = Board()
 
     def test_get_board_returns_correctly_sized_board(self) -> None:
-        """Test that the `Board.get_board` returns a board of the correct dimensions."""
-
         board: List[List[CellValue]] = self.board.get_board()
 
         self.assertEqual(len(board), BOARD_SIZE)
@@ -35,7 +32,6 @@ class TestBoardGetBoard(unittest.TestCase):
 
 
 class TestBoardGetCell(unittest.TestCase):
-    """Test `Board.get_cell` implementation."""
 
     def setUp(self) -> None:
         test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
@@ -44,34 +40,27 @@ class TestBoardGetCell(unittest.TestCase):
     def test_get_cell_raises_invalid_cell_error_if_invalid_cell_provided(
         self,
     ) -> None:
-        """Test that `Board.get_cell` raises InvalidCellError
-        if invalid cell provided."""
+        with self.assertRaises(InvalidCellError):
+            self.board.get_cell((-1, 0))  # type: ignore[arg-type]
 
         with self.assertRaises(InvalidCellError):
-            self.board.get_cell(-1, 0)
+            self.board.get_cell((0, -1))  # type: ignore[arg-type]
 
         with self.assertRaises(InvalidCellError):
-            self.board.get_cell(0, -1)
+            self.board.get_cell((BOARD_SIZE + 1, 0))  # type: ignore[arg-type]
 
         with self.assertRaises(InvalidCellError):
-            self.board.get_cell(BOARD_SIZE + 1, 0)
-
-        with self.assertRaises(InvalidCellError):
-            self.board.get_cell(0, BOARD_SIZE + 1)
+            self.board.get_cell((0, BOARD_SIZE + 1))  # type: ignore[arg-type]
 
     def test_get_cell_returns_correct_value_if_valid_cell_provided(
         self,
     ) -> None:
-        """Test that `Board.get_cell` returns correct value
-        if valid cell provided."""
-
-        self.assertEqual(self.board.get_cell(0, 0), "X")
-        self.assertEqual(self.board.get_cell(1, 1), None)
-        self.assertEqual(self.board.get_cell(2, 2), "O")
+        self.assertEqual(self.board.get_cell((0, 0)), "X")
+        self.assertEqual(self.board.get_cell((1, 1)), None)
+        self.assertEqual(self.board.get_cell((2, 2)), "O")
 
 
 class TestBoardMakeMove(unittest.TestCase):
-    """Test `Board.make_move` implementation."""
 
     def setUp(self) -> None:
         test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
@@ -80,57 +69,42 @@ class TestBoardMakeMove(unittest.TestCase):
     def test_make_move_raises_invalid_cell_error_if_invalid_cell_attempted(
         self,
     ) -> None:
-        """Tests that `Board.make_move` raises InvalidCellError
-        if an attempt is made to play on an invalid cell."""
+        with self.assertRaises(InvalidCellError):
+            self.board.make_move((-1, 0), "X")  # type: ignore[arg-type]
 
         with self.assertRaises(InvalidCellError):
-            self.board.make_move(-1, 0, "X")
-
-        with self.assertRaises(InvalidCellError):
-            self.board.make_move(0, BOARD_SIZE + 1, "O")
+            self.board.make_move((0, BOARD_SIZE + 1), "O")  # type: ignore[arg-type]
 
     def test_make_move_raises_invalid_move_error_if_nonblank_cell_attempted(
         self,
     ) -> None:
-        """Tests that `Board.make_move` raises `InvalidMoveError`
-        if an attempt is made to play on a nonblank cell."""
+        with self.assertRaises(InvalidMoveError):
+            self.board.make_move((0, 0), "O")
 
         with self.assertRaises(InvalidMoveError):
-            self.board.make_move(0, 0, "O")
-
-        with self.assertRaises(InvalidMoveError):
-            self.board.make_move(2, 2, "X")
+            self.board.make_move((2, 2), "X")
 
     def test_make_move_raises_invalid_move_error_if_invalid_move_attempted(
         self,
     ) -> None:
-        """Tests that `Board.make_move` raises `InvalidMoveError`
-        if an attempt is made to play a move other than "X" or "O"."""
-
         with self.assertRaises(InvalidMoveError):
-            self.board.make_move(0, 2, "Y")  # type: ignore
+            self.board.make_move((0, 2), "Y")  # type: ignore[arg-type]
 
     def test_make_move_correctly_changes_board_state(self) -> None:
-        """Tests that `Board.make_move` correctly changes board state
-        when called."""
+        self.board.make_move((0, 2), "X")
+        self.assertEqual(self.board.get_cell((0, 2)), "X")
 
-        self.board.make_move(0, 2, "X")
-        self.assertEqual(self.board.get_cell(0, 2), "X")
-
-        self.board.make_move(1, 1, "O")
-        self.assertEqual(self.board.get_cell(1, 1), "O")
+        self.board.make_move((1, 1), "O")
+        self.assertEqual(self.board.get_cell((1, 1)), "O")
 
 
 class TestBoardStringifyBoard(unittest.TestCase):
-    """Tests that `Board.stringify_board` returns the correct string."""
 
     def setUp(self) -> None:
         test_board_state: List[List[CellValue]] = deepcopy(TEST_BOARD_STATE)
         self.board = Board(starting_state=test_board_state)
 
     def test_stringify_board_returns_proper_board_string(self) -> None:
-        """Tests that `Board.stringify_board` returns the correct string."""
-
         actual_board_string = self.board.stringify_board()
 
         top: str = "   ╻   ╻   "
@@ -148,11 +122,8 @@ class TestBoardStringifyBoard(unittest.TestCase):
 
 
 class TestBoardCheckWin(unittest.TestCase):
-    """Tests that `Board.check_win` correctly detects a win state."""
 
     def test_check_win_detects_horizontal_win(self) -> None:
-        """Test that `Board.check_win` correct detects a horizontal win state."""
-
         horizontal_win_state_1: List[List[CellValue]] = [
             ["X", "X", "X"],
             ["O", None, "O"],
@@ -176,8 +147,6 @@ class TestBoardCheckWin(unittest.TestCase):
         self.assertEqual(horizontal_win_state_2_board.check_win(), (True, "O"))
 
     def test_check_win_detects_vertical_win(self) -> None:
-        """Test that `Board.check_win` correctly detects a vertical win state."""
-
         vertical_win_state_1: List[List[CellValue]] = [
             ["O", "X", None],
             ["O", "X", "X"],
@@ -197,8 +166,6 @@ class TestBoardCheckWin(unittest.TestCase):
         self.assertEqual(vertical_win_state_2_board.check_win(), (True, "X"))
 
     def test_check_win_detects_diagonal_wins(self) -> None:
-        """Test that `Board.check_win` correctly detects a diagonal win state."""
-
         diagonal_win_state_1: List[List[CellValue]] = [
             ["O", "X", None],
             ["X", "O", "X"],
@@ -218,8 +185,6 @@ class TestBoardCheckWin(unittest.TestCase):
         self.assertEqual(diagonal_win_state_2_board.check_win(), (True, "X"))
 
     def test_check_win_detects_non_win(self) -> None:
-        """Test that `Board.check_win` correctly detects a non-win state."""
-
         non_win_state: List[List[CellValue]] = [
             ["X", "O", "X"],
             ["O", "X", "O"],
