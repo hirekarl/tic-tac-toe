@@ -1,10 +1,17 @@
 """CLI Tic-Tac-Toe."""
 
+from src.models.board import Board
+
+from .game_loop import display_title, loop_game
+
 
 def main() -> None:
-    """Main game execution."""
+    """Game execution."""
 
-    raise NotImplementedError
+    board: Board = Board()
+
+    display_title()
+    loop_game(board)
 
 
 if __name__ == "__main__":
