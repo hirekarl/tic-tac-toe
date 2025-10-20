@@ -33,7 +33,7 @@ def display_title() -> None:
 
 
 def loop_game(board: Board) -> None:
-    """Execuge main game loop."""
+    """Execute main game loop."""
 
     player: PlayerMarker | None = None
 
