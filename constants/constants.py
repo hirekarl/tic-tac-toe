@@ -29,7 +29,7 @@ GRID_BOTTOM: str = "\n   ╹   ╹   "
 
 # Cell Keys
 VALID_CELL_KEYS: Set[CellKey] = {"1", "2", "3", "4", "5", "6", "7", "8", "9"}
-CELL_KEY_TO_CELL_MAP: Mapping[CellKey, Tuple[RowsCols, RowsCols]] = {
+CELL_KEY_TO_CELL_MAP: Mapping[CellKey, Cell] = {
     "7": (0, 0),
     "8": (0, 1),
     "9": (0, 2),
