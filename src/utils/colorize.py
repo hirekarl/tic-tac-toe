@@ -14,7 +14,7 @@ from constants.constants import (
 
 
 class Color(Enum):
-    """Color option enum for `_colorize`."""
+    """Color option enum for text colors."""
 
     GREY = auto()
     RED = auto()
