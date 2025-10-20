@@ -224,3 +224,15 @@ class Board:
             return (True, winner)
 
         return (False, None)
+
+    def check_draw(self) -> bool:
+        """Checks the board for a draw state.
+
+        Returns:
+            bool: _description_
+        """
+        is_draw: bool = all(
+            cell is not None for row in self._board for cell in row
+        ) and self.check_win() == (False, None)
+
+        return is_draw
