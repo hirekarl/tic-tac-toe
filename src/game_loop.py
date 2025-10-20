@@ -1,7 +1,5 @@
 """Main game loop functions."""
 
-import sys
-
 from typing import Union, cast
 
 from constants.constants import PlayerMarker
@@ -22,8 +20,6 @@ def _end_game(board: Board, winner: Union[PlayerMarker, None]) -> None:
         print(f"\n{yellow('   Draw!   ')}\n")
     else:
         print(f"\n{yellow(f'  {winner} wins!  ')}\n")
-
-    sys.exit(0)
 
 
 def display_title() -> None:

@@ -1,5 +1,7 @@
 """CLI Tic-Tac-Toe."""
 
+import sys
+
 from src.models.board import Board
 
 from .game_loop import display_title, loop_game
@@ -12,6 +14,7 @@ def main() -> None:
 
     display_title()
     loop_game(board)
+    sys.exit(0)
 
 
 if __name__ == "__main__":
