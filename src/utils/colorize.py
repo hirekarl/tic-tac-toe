@@ -2,7 +2,7 @@
 
 from enum import Enum, auto
 
-from constants.constants import ANSI_GREY, ANSI_RED, ANSI_GREEN, ANSI_RESET
+from constants.constants import ANSI_GREY, ANSI_RED, ANSI_GREEN, ANSI_CYAN, ANSI_RESET
 
 
 class Color(Enum):
@@ -11,6 +11,7 @@ class Color(Enum):
     GREY = auto()
     RED = auto()
     GREEN = auto()
+    CYAN = auto()
 
 
 def _colorize(input_str: str, color: Color) -> str:
@@ -23,6 +24,8 @@ def _colorize(input_str: str, color: Color) -> str:
             colorized_str = f"{ANSI_RED}{input_str}"
         case Color.GREEN:
             colorized_str = f"{ANSI_GREEN}{input_str}"
+        case Color.CYAN:
+            colorized_str = f"{ANSI_CYAN}{input_str}"
         case _:
             raise ValueError(f"Invalid color: {color!r}.")
 
@@ -45,3 +48,9 @@ def green(input_str: str) -> str:
     """Turn text green."""
 
     return _colorize(input_str, Color.GREEN)
+
+
+def cyan(input_str: str) -> str:
+    """Turn text cyan."""
+
+    return _colorize(input_str, Color.CYAN)

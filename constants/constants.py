@@ -16,6 +16,7 @@ BOARD_SIZE: int = 3  # NB: Do not change! Board size should *only* ever be 3.
 ANSI_GREY: str = "\033[90m"
 ANSI_RED: str = "\033[31m"
 ANSI_GREEN: str = "\033[32m"
+ANSI_CYAN: str = "\033[36m"
 ANSI_RESET: str = "\033[0m"
 
 # Board Grid Components
