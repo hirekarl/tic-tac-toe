@@ -27,7 +27,7 @@ tic-tac-toe
 ## Testing
 ```powershell
 cd tic_tac_toe  # If not in repo root
-python -m unittest
+python -m unittest discover
 ```
 
 ## Static Type-Checking
