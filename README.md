@@ -19,7 +19,19 @@ pip install -e .
 
 ## Playing
 ```powershell
-cd tic_tac_toe # If not in repo root
-.venv\Scripts\Activate.ps1 # If virtual environment not already activated
+cd tic_tac_toe  # If not in repo root
+.venv\Scripts\Activate.ps1  # If virtual environment not already activated
 tic-tac-toe
+```
+
+## Testing
+```powershell
+cd tic_tac_toe  # If not in repo root
+python -m unittest
+```
+
+## Static Type-Checking
+```powershell
+cd tic_tac_toe  # If not in repo root
+mypy .  # Requires global mypy install
 ```
