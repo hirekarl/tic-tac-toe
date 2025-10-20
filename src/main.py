@@ -6,7 +6,7 @@ from .game_loop import display_title, loop_game
 
 
 def main() -> None:
-    """Game execution."""
+    """Execute game."""
 
     board: Board = Board()
 

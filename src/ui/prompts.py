@@ -1,4 +1,4 @@
-"""Docstring goes here."""
+"""Prompt players for moves."""
 
 from typing import cast
 
@@ -16,11 +16,7 @@ from src.utils.colorize import red, green, cyan
 
 
 class InvalidCellKeyError(Exception):
-    """_summary_
-
-    Args:
-        Exception (_type_): _description_
-    """
+    """Custom exception for when an incorrect cell key is provided."""
 
     _message: str
 
@@ -38,11 +34,11 @@ def _get_cell_from_cell_key(cell_key: CellKey) -> Cell:
 
 
 def prompt(player_marker: PlayerMarker, board: Board) -> None:
-    """_summary_
+    """Prompt player `player_marker` for next move.
 
     Args:
-        player_marker (PlayerMarker): _description_
-        board (Board): _description_
+        player_marker (PlayerMarker): "X" or "O".
+        board (Board): The game board.
     """
 
     player_str = red("X") if player_marker == "X" else green("O")

@@ -33,11 +33,12 @@ def display_title() -> None:
 
 
 def loop_game(board: Board) -> None:
-    """Main game loop."""
+    """Execuge main game loop."""
 
     player: PlayerMarker | None = None
 
     win, winner = board.check_win()
+
     while not win and winner is None:
         if board.check_draw():
             _end_game(board, None)

@@ -85,14 +85,14 @@ class Board:
         """Get the value at (`row`, `col`) from the board.
 
         Args:
-            # row (RowsCols): Row number (0-indexed).
-            # col (RowsCols): Column number (0-indexed).
+            cell (Cell): The tuple corresponding to the cell location on the board.
+            move_value (MoveValue): "X" or "O".
 
         Raises:
             InvalidCellError: When an invalid (`row`, `col`) is requested.
 
         Returns:
-            CellValue: The value at (`row`, `col`).
+            CellValue: The value ("X", "O", or `None`) at (`row`, `col`).
         """
 
         row, col = cell
@@ -104,12 +104,11 @@ class Board:
         return cell_value
 
     def make_move(self, cell: Cell, move_value: PlayerMarker) -> None:
-        """Play `move_value` at (`row`, `col`).
+        """Play `move_value` ("X" or "O") at (`row`, `col`).
 
         Args:
-            # row (int): Row number (0-indexed).
-            # col (int): Column number (0-indexed).
-            move_value (MoveValue): "X" or "O".
+            cell (Cell): The tuple corresponding to the cell location on the board.
+                move_value (MoveValue): "X" or "O".
 
         Raises:
             InvalidCellError: When an attempt is made to play on an invalid cell.
@@ -188,8 +187,8 @@ class Board:
 
         Returns:
             Tuple[bool, Union[MoveValue, None]]: A tuple where the boolean
-            indicates if a win state exists (`True` or `False`), and the second element
-            is the winning value ("X" or "O") if `True`, or `None` if `False`.
+                indicates if a win state exists (`True` or `False`), and the second element
+                is the winning value ("X" or "O") if `True`, or `None` if `False`.
         """
 
         def _check_cell_values(
@@ -229,7 +228,7 @@ class Board:
         """Checks the board for a draw state.
 
         Returns:
-            bool: _description_
+            bool: Whether the game is a draw (`True`) or not (`False`).
         """
         is_draw: bool = all(
             cell is not None for row in self._board for cell in row
