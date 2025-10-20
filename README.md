@@ -5,12 +5,12 @@ A simple CLI Tic-Tac-Toe game, made with principles of Test-Driven Development.
 Python &ge;3.13
 
 ## Cloning
-```bash
+```powershell
 git clone https://github.com/hirekarl/tic_tac_toe.git
 ```
 
 ## Installing
-```bash
+```powershell
 cd tic_tac_toe
 python -m venv .venv
 .venv\Scripts\Activate.ps1
@@ -18,7 +18,7 @@ pip install -e .
 ```
 
 ## Playing
-```bash
+```powershell
 cd tic_tac_toe # If not in repo root
 .venv\Scripts\Activate.ps1 # If virtual environment not already activated
 tic-tac-toe
