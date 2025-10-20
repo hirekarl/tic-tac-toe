@@ -28,6 +28,9 @@ Documentation = "https://github.com/hirekarl/tic_tac_toe"
 Repository = "https://github.com/hirekarl/tic_tac_toe"
 "Bug Tracker" = "https://github.com/hirekarl/tic_tac_toe/issues"
 
+[tool.setuptools]
+packages = ["src", "constants"]
+
 [tool.mypy]
 exclude = '^tests/.* | ^test_.*\.py'
 python_version = "3.13"
