@@ -2,9 +2,17 @@
 
 import unittest
 
-from constants.constants import ANSI_GREY, ANSI_RED, ANSI_GREEN, ANSI_RESET
+from constants.constants import (
+    ANSI_GREY,
+    ANSI_RED,
+    ANSI_GREEN,
+    ANSI_CYAN,
+    ANSI_YELLOW,
+    ANSI_MAGENTA,
+    ANSI_RESET,
+)
 
-from src.utils.colorize import grey, red, green
+from src.utils.colorize import grey, red, green, cyan, yellow, magenta
 
 
 class TestColorize(unittest.TestCase):
@@ -25,4 +33,19 @@ class TestColorize(unittest.TestCase):
     def test_green_makes_green_text(self) -> None:
         self.assertEqual(
             green(self.test_string), f"{ANSI_GREEN}{self.test_string}{ANSI_RESET}"
+        )
+
+    def test_cyan_makes_cyan_text(self) -> None:
+        self.assertEqual(
+            cyan(self.test_string), f"{ANSI_CYAN}{self.test_string}{ANSI_RESET}"
+        )
+
+    def test_yellow_makes_yellow_text(self) -> None:
+        self.assertEqual(
+            yellow(self.test_string), f"{ANSI_YELLOW}{self.test_string}{ANSI_RESET}"
+        )
+
+    def test_magenta_makes_magenta_text(self) -> None:
+        self.assertEqual(
+            magenta(self.test_string), f"{ANSI_MAGENTA}{self.test_string}{ANSI_RESET}"
         )
